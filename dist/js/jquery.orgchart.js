@@ -755,6 +755,7 @@
             that.addSiblings($edge.parent(), data.siblings ? data.siblings : data);
           }
         }
+        opts.childrenLoaded && opts.childrenLoaded($edge.parent());
       })
       .fail(function () {
         console.log('Failed to get ' + rel + ' data');
