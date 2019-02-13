@@ -510,6 +510,7 @@
     //
     hideChildrenEnd: function (event) {
       var $node = event.data.node;
+      var opts = this.options;
       event.data.animatedNodes.removeClass('sliding');
       if (event.data.isVerticalDesc) {
         event.data.lowerLevel.addClass('hidden');
@@ -520,6 +521,7 @@
       if (this.isInAction($node)) {
         this.switchVerticalArrow($node.children('.bottomEdge'));
       }
+      opts.childrenLoaded && opts.childrenLoaded($node);
     },
     // recursively hide the descendant nodes of the specified node
     hideChildren: function ($node) {
@@ -544,6 +546,7 @@
     // show the children nodes of the specified node
     showChildren: function ($node) {
       var that = this;
+      var opts = this.options;
       var $levels = $node.closest('tr').siblings();
       var isVerticalDesc = $levels.is('.verticalNodes') ? true : false;
       var $animatedNodes = isVerticalDesc
@@ -552,6 +555,7 @@
       // the two following statements are used to enforce browser to repaint
       this.repaint($animatedNodes.get(0));
       $animatedNodes.addClass('sliding').removeClass('slide-up').eq(0).one('transitionend', { 'node': $node, 'animatedNodes': $animatedNodes }, this.showChildrenEnd.bind(this));
+      opts.childrenLoaded && opts.childrenLoaded($node);
     },
     //
     hideSiblingsEnd: function (event) {
